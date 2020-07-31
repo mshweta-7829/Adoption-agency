@@ -1,10 +1,12 @@
 """Flask app for adopt app."""
 
-from flask import Flask, render_template
+from flask import Flask, render_template,redirect
 
 from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Pet
+
+from forms import AddPetForm
 
 app = Flask(__name__)
 
@@ -48,5 +50,8 @@ def add_pet():
         #DEBUG if needed add print statement
 
         new_pet = Pet(name = name, species = species, photo_url = photo_url, age = age, notes = notes)
+        db.session.add(new_pet)
+        db.session.commit()
+        return redirect("/")
     else:
         return render_template('add_pet.html', form = add_pet_form)
