@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Users {% endblock %}
+
+{% block content %}
+  <h1>Pets</h1>
+  <ul>
+    {% if pet_details %}
+        {% for pet in pet_details %}
+        <li>
+            <a href=""> {{ pet.name }} </a> 
+
+            {% if pet.photo_url %}
+                <img src="{{pet.photo_url}}" alt="pet-photo">
+            {% endif %}
+
+            {% if pet.available %}
+                <b>Available</b>
+            {% endif %}
+        </li>
+        {% endfor %}
+    {% endif %}
+  </ul>
+  <a href="/users/new" class="btn btn-primary">Add user</a>
+{% endblock %}
