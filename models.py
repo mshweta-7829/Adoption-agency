@@ -1,5 +1,5 @@
 """Models for adopt app."""
-
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -26,7 +26,7 @@ class Pet(db.Model):
     available = db.Column(db.Boolean, nullable=False, default=True)
 
     def __repr__(self):
-        """Show info about User."""
+        """Show info about the pet."""
 
         p = self
         return f"<Pet {p.id} {p.name} {p.species} {p.photo_url} {p.age} {p.notes} {p.available}>"
