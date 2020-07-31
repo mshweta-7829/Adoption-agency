@@ -8,7 +8,7 @@
     {% if pet_details %}
         {% for pet in pet_details %}
         <li>
-            <a href=""> {{ pet.name }} </a> 
+            <a href="/{{ pet.id }}"> {{ pet.name }} </a> 
 
             {% if pet.photo_url %}
                 <img src="{{pet.photo_url}}" alt="pet-photo">

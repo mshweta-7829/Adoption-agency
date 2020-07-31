@@ -6,9 +6,9 @@ db.drop_all()
 db.create_all()
 
 # Add users
-cat = Pet(name='xyz', species='cat',age=2)
-dog = Pet(name='abc', species='dag', age=5)
-rabbit = Pet(name='def', species='rabbit', age=4)
+cat = Pet(name='xyz', species='cat',age='baby')
+dog = Pet(name='abc', species='dog', age='adult')
+rabbit = Pet(name='def', species='porcupine', age='adult')
 
 db.session.add(cat)
 db.session.add(dog)

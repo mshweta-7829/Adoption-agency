@@ -6,7 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Pet
 
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
 
@@ -43,11 +43,9 @@ def add_pet():
     if add_pet_form.validate_on_submit():
         name = add_pet_form.name.data
         species = add_pet_form.species.data
-        photo_url = add_pet_form.photo_url.data #TODO check if error
+        photo_url = add_pet_form.photo_url.data 
         age = add_pet_form.age.data
         notes = add_pet_form.age.data or None
-
-        #DEBUG if needed add print statement
 
         new_pet = Pet(name = name, species = species, photo_url = photo_url, age = age, notes = notes)
         db.session.add(new_pet)
@@ -55,3 +53,21 @@ def add_pet():
         return redirect("/")
     else:
         return render_template('add_pet.html', form = add_pet_form)
+
+@app.route('/<int:pet_id_number>', methods = ['GET', 'POST'])
+def edit_pet(pet_id_number):
+    """Shows some information about the pet and an edit pet form; processes form for editting a pet."""
+    current_pet = Pet.query.get(pet_id_number)
+    edit_pet_form = EditPetForm(obj=current_pet)
+
+    if  edit_pet_form.validate_on_submit():
+
+        current_pet.photo_url = edit_pet_form.photo_url.data
+        current_pet.notes = edit_pet_form.notes.data or None
+        current_pet.available = edit_pet_form.available.data
+
+        db.session.commit()
+
+        return redirect(f"/{pet_id_number}")
+    else:
+        return render_template('/edit_pet.html', form = edit_pet_form, pet = current_pet)
